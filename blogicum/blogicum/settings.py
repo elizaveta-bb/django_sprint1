@@ -126,5 +126,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-STATICFILES_DIRS = [BASE_DIR / '..' / 'html',] # у тебя статика в папке html
+STATICFILES_DIRS = [BASE_DIR / '..' / 'html', ]
 STATIC_URL = '/static/'
