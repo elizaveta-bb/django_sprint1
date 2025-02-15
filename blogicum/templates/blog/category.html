@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+<!-- Формируется из локации и даты -->
+{% block title %}
+Остров отчаянья. 25 октября 1659 года
+{% endblock %}
+
+{% block content %}
+  <h1>Публикации в категории {{ category }}</h1>  
+  <hr>
+  <!-- Отображаем все посты в цикле -->
+  {% for post in posts %} 
+    <article>
+      <ul>
+        <li>
+          <!-- берём данные конкретного поста -->
+          Место: {{ post.location }}
+        </li>
+        <li>
+          <!-- берём данные конкретного поста -->
+          Дата: {{ post.date }}
+        </li>
+        <li>
+          <!-- берём данные конкретного поста, реверсим ссылку по названию из urls.py -->
+          Категория: <a href="{% url 'blog:category_posts' post.category %}">{{ post.category }}</a>
+        </li>
+      </ul>
+      <!-- Первые 10 слов -->
+      <p>
+        <!-- берём данные конкретного поста, обрезаем до 10 слов(|truncatewords:10) -->
+        {{ post.text|truncatewords:10 }}
+      </p>
+      <a href="{% url 'blog:post_detail' post.id %}">Читать полный текст</а>
+    </article>
+    <hr>
+  {% endfor %}
+{% endblock %}

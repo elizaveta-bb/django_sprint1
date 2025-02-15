@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+<!-- Формируется из локации и даты -->
+{% block title %}
+Остров отчаянья. 25 октября 1659 года
+{% endblock %}
+
+{% block content %}
+  <article>
+    <ul>
+      <li>
+        <!-- берём данные конкретного поста -->
+        Место: {{ post.location }}
+      </li>
+        Дата: {{ post.date }}
+      </li>
+      <li>
+        Категория: <a href="{% url 'blog:category_posts' post.category %}">{{ post.category }}</a>
+      </li>
+    </ul>
+    <p>
+      <!-- берём данные конкретного поста, сохраняем переносы строк(|linebreaks) -->
+      {{ post.text|linebreaks }}
+    </p>
+    </p>
+  </article>
+{% endblock %}
