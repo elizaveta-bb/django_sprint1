@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Post
+from django.http import HttpResponseNotFound
 
 posts = [
     {
@@ -48,11 +48,12 @@ posts_dict = {post['id']: post for post in posts}
 
 
 def index(request):
-    posts = Post.objects.all().order_by('-date')
-    return render(request, 'blog/index.html', {'posts': posts})
+    return render(request, 'blog/index.html', {'posts': reversed(posts)})
 
 
 def post_detail(request, post_id):
+    if post_id not in posts_dict.keys():
+        return HttpResponseNotFound("No post with such id")
     post = posts_dict[post_id]
     return render(request, 'blog/detail.html', {'post': post})
 
