@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import Http404
-
+from .models import Post
 
 posts = [
     {
@@ -45,23 +45,19 @@ posts = [
     },
 ]
 
-# Create your views here.
+posts_dict = {post['id']: post for post in posts}
 
 
 def index(request):
-    return render(request, 'blog/index.html', {'posts': reversed(posts)})
+    posts = Post.objects.all().order_by('-date')
+    return render(request, 'blog/index.html', {'posts': posts})
 
 
-def post_detail(request, id):
-    try:
-        post = [post for post in posts if post['id'] == id][0]
-    except IndexError:
-        raise Http404("Post not found")
+def post_detail(request, post_id):
+    post = posts_dict[post_id]
     return render(request, 'blog/detail.html', {'post': post})
 
 
 def category_posts(request, category_slug):
-    filtered_posts = [post
-                      for post in posts if post['category'] == category_slug]
     return render(request, 'blog/category.html',
-                  {'category': category_slug, 'posts': filtered_posts})
+                  {'category_slug': category_slug})
