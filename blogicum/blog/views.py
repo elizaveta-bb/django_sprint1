@@ -44,17 +44,18 @@ posts = [
     },
 ]
 
-posts_dict = {post['id']: post for post in posts}
+POSTS = {post['id']: post for post in posts}
 
 
 def index(request):
-    return render(request, 'blog/index.html', {'posts': reversed(posts)})
+    return render(request, 'blog/index.html',
+                  {'posts': reversed(posts)})
 
 
 def post_detail(request, post_id):
-    if post_id not in posts_dict.keys():
+    if post_id not in POSTS:
         return HttpResponseNotFound("No post with such id")
-    post = posts_dict[post_id]
+    post = POSTS[post_id]
     return render(request, 'blog/detail.html', {'post': post})
 
 
